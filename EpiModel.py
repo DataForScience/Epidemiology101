@@ -7,6 +7,7 @@ import networkx as nx
 import numpy as np
 import scipy.integrate
 import pandas as pd
+import matplotlib.pyplot as plt
 
 class EpiModel:
     """Simple Epidemic Model Implementation
@@ -103,3 +104,14 @@ class EpiModel:
                 text+="%s -> %s %f\n" % (source, target, rate)
                 
         return text
+
+
+if __name__ == '__main__':
+
+    SIR = EpiModel()
+    SIR.add_interaction('S', 'I', 'I', 0.2)
+    SIR.add_spontaneous('I', 'R', 0.1)
+
+    SIR.integrate(365, S=100000-1, I=1, R=0)
+    SIR.plot()
+    plt.gcf().savefig('SIR.png')
