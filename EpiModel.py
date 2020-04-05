@@ -9,13 +9,13 @@ import scipy.integrate
 import pandas as pd
 import matplotlib.pyplot as plt
 
-class EpiModel:
+class EpiModel(object):
     """Simple Epidemic Model Implementation
     
         Provides a way to implement and numerically integrate 
     """
     def __init__(self, compartments=None):
-        self.transitions = nx.DiGraph()
+        self.transitions = nx.MultiDiGraph()
         
         if compartments is not None:
             self.transitions.add_nodes_from([comp for comp in compartments])
@@ -47,14 +47,14 @@ class EpiModel:
             
         return diff
     
-    def plot(self, title=None, normed=False):
+    def plot(self, title=None, normed=True, **kwargs):
         """Convenience function for plotting"""
         try:
             if normed:
                 N = self.values_.iloc[0].sum()
-                ax = (self.values_/N).plot()
+                ax = (self.values_/N).plot(**kwargs)
             else:
-                ax = self.values_.plot()
+                ax = self.values_.plot(**kwargs)
                 
             ax.set_xlabel('Time')
             ax.set_ylabel('Population')
