@@ -15,4 +15,4 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 - Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
 - [EpiModel.py](https://github.com/DataForScience/Epidemiology101/blob/master/EpiModel.py) - Python module encapsulates all the code necessary to numerically implement arbitrary compartmental epidemic models
 
-Be kept put to date on all things Machine Learning and Data Science right in your mail box. Signing up to [The Sunday Briefing](https://data4sci.com/newsletter) newsletter: https://data4sci.com/newsletter
+Be kept put to date on all things Machine Learning and Data Science right in your mail box. Sign up to [The Sunday Briefing](https://data4sci.com/newsletter) newsletter: https://data4sci.com/newsletter
