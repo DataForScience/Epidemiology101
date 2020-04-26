@@ -1,3 +1,7 @@
+*.key
+*.png
+*.ai
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
