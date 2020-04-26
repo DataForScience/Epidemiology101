@@ -5,6 +5,7 @@
 
 import networkx as nx
 import numpy as np
+from numpy import linalg
 from numpy import random
 import scipy.integrate
 import pandas as pd
@@ -163,12 +164,69 @@ class EpiModel(object):
                 
         return text
 
+    def _get_susceptible(self):
+        degree = dict(self.transitions.in_degree())
+
+        for node in degree:
+            if degree[node] == 0:
+                return node
+
+        return None
+
+
+    def R0(self):
+        infected = set()
+
+        susceptible = self._get_susceptible()
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            if "agent" in data:
+                infected.add(data['agent'])
+                infected.add(node_j)
+
+
+        infected = sorted(infected)
+        N_infected = len(infected)
+
+        F = np.zeros((N_infected, N_infected), dtype='float')
+        V = np.zeros((N_infected, N_infected), dtype='float')
+
+        pos = dict(zip(infected, np.arange(N_infected)))
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            rate = data['rate']
+
+            if "agent" in data:
+                target = pos[node_j]
+                agent = pos[data['agent']]
+
+                if node_i == susceptible:
+                    F[target, agent] = rate
+            else:
+                source = pos[node_i]
+
+                V[source, source] += rate
+
+                if node_j in pos:
+                    target = pos[node_j]
+                    V[target, source] -= rate
+
+        eig, v = linalg.eig(np.dot(F, linalg.inv(V)))
+
+        return eig.max()
+
 
 if __name__ == '__main__':
 
     SIR = EpiModel()
     SIR.add_interaction('S', 'I', 'I', 0.2)
+    #SIR.add_interaction('S', 'E', 'Is', 0.2)
+    #SIR.add_spontaneous('E', 'Ia', 0.5*0.1)
+    #SIR.add_spontaneous('E', 'Is', 0.5*0.1)
+    #SIR.add_spontaneous('Ia', 'R', 0.1)
     SIR.add_spontaneous('I', 'R', 0.1)
+
+    print("R0 =", SIR.R0())
 
     N = 100000
     fig, ax = plt.subplots(1)
