@@ -161,7 +161,9 @@ class EpiModel(object):
                 text += "%s + %s = %s %f\n" % (source, agent, target, rate)
             else:
                 text+="%s -> %s %f\n" % (source, target, rate)
-                
+        
+        text += "\nR0=%1.2f" % self.R0()
+
         return text
 
     def _get_susceptible(self):
