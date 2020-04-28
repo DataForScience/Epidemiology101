@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DataForScience/Epidemiology101/)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
 
 # Epidemic Modeling for Everyone
 
@@ -14,7 +14,7 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 3. [Epidemic Modeling 103: Adding confidence intervals and stochastic effects to your CoVID-19 Models](https://medium.com/data-for-science/epidemic-modeling-103-adding-confidence-intervals-and-stochastic-effects-to-your-covid-19-models-be618b995d6b) [Epidemiology103.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology103.ipynb)
 
-- Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master) or [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DataForScience/Epidemiology101/)
+- Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
 
 - [EpiModel.py](https://github.com/DataForScience/Epidemiology101/blob/master/EpiModel.py) - Python module encapsulates all the code necessary to numerically implement arbitrary compartmental epidemic models
 
