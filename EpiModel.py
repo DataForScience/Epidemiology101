@@ -175,6 +175,15 @@ class EpiModel(object):
 
         return None
 
+    def _get_infectious(self):
+        inf = set()
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            if "agent" in data:
+                inf.add(data['agent'])
+
+        return inf
+
 
     def R0(self):
         infected = set()
