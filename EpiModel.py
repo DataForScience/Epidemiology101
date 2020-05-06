@@ -11,6 +11,9 @@ import scipy.integrate
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from tqdm import tqdm
+tqdm.pandas()
+
 class EpiModel(object):
     """Simple Epidemic Model Implementation
     
@@ -18,6 +21,7 @@ class EpiModel(object):
     """
     def __init__(self, compartments=None):
         self.transitions = nx.MultiDiGraph()
+        self.seasonality = None
         
         if compartments is not None:
             self.transitions.add_nodes_from([comp for comp in compartments])
@@ -43,6 +47,11 @@ class EpiModel(object):
             if 'agent' in trans:
                 agent = trans['agent']
                 rate *= population[pos[agent]]/N
+
+                if self.seasonality is not None:
+                    curr_t = int(np.round(time))
+                    season = float(self.seasonality[curr_t])
+                    rate *= season
                 
             diff[pos[source]] -= rate
             diff[pos[target]] += rate
@@ -75,7 +84,7 @@ class EpiModel(object):
         else:
             raise AttributeError("'EpiModel' object has no attribute '%s'" % name)
 
-    def simulate(self, timesteps, **kwargs):
+    def simulate(self, timesteps, seasonality=None, **kwargs):
         """Stochastically simulate the epidemic model"""
         pos = {comp: i for i, comp in enumerate(kwargs)}
         population=np.zeros(len(pos), dtype='int')
@@ -88,6 +97,8 @@ class EpiModel(object):
 
         comps = list(self.transitions.nodes)
         time = np.arange(1, timesteps, 1, dtype='int')
+
+        self.seasonality = seasonality
 
         for t in time:
             pop = values[-1]
@@ -109,6 +120,11 @@ class EpiModel(object):
                     if 'agent' in data:
                         agent = pos[data['agent']]
                         rate *= pop[agent]/N
+
+                        if self.seasonality is not None:
+                            curr_t = t
+                            season = float(self.seasonality[curr_t])
+                            rate *= season
 
                     prob[target] = rate
 
@@ -132,7 +148,7 @@ class EpiModel(object):
         values = np.array(values)
         self.values_ = pd.DataFrame(values[1:], columns=comps, index=time)
     
-    def integrate(self, timesteps, **kwargs):
+    def integrate(self, timesteps, seasonality=None, **kwargs):
         """Numerically integrate the epidemic model"""
         pos = {comp: i for i, comp in enumerate(kwargs)}
         population=np.zeros(len(pos))
@@ -142,6 +158,7 @@ class EpiModel(object):
         
         time = np.arange(1, timesteps, 1)
 
+        self.seasonality = seasonality
         self.values_ = pd.DataFrame(scipy.integrate.odeint(self._new_cases, population, time, args=(pos,)), columns=pos.keys(), index=time)
 
     def __repr__(self):
@@ -162,7 +179,10 @@ class EpiModel(object):
             else:
                 text+="%s -> %s %f\n" % (source, target, rate)
         
-        text += "\nR0=%1.2f" % self.R0()
+        R0 = self.R0()
+
+        if R0 is not None:
+            text += "\nR0=%1.2f" % R0
 
         return text
 
@@ -195,57 +215,63 @@ class EpiModel(object):
 
         pos = dict(zip(infected, np.arange(N_infected)))
 
-        for node_i, node_j, data in self.transitions.edges(data=True):
-            rate = data['rate']
+        try:
+            for node_i, node_j, data in self.transitions.edges(data=True):
+                rate = data['rate']
 
-            if "agent" in data:
-                target = pos[node_j]
-                agent = pos[data['agent']]
-
-                if node_i == susceptible:
-                    F[target, agent] = rate
-            else:
-                source = pos[node_i]
-
-                V[source, source] += rate
-
-                if node_j in pos:
+                if "agent" in data:
                     target = pos[node_j]
-                    V[target, source] -= rate
+                    agent = pos[data['agent']]
 
-        eig, v = linalg.eig(np.dot(F, linalg.inv(V)))
+                    if node_i == susceptible:
+                        F[target, agent] = rate
+                else:
+                    source = pos[node_i]
 
-        return eig.max()
+                    V[source, source] += rate
+
+                    if node_j in pos:
+                        target = pos[node_j]
+                        V[target, source] -= rate
+        
+            eig, v = linalg.eig(np.dot(F, linalg.inv(V)))
+
+            return eig.max()
+        except:
+            return None
 
 
 if __name__ == '__main__':
 
-    SIR = EpiModel()
-    SIR.add_interaction('S', 'I', 'I', 0.2)
-    #SIR.add_interaction('S', 'E', 'Is', 0.2)
-    #SIR.add_spontaneous('E', 'Ia', 0.5*0.1)
-    #SIR.add_spontaneous('E', 'Is', 0.5*0.1)
-    #SIR.add_spontaneous('Ia', 'R', 0.1)
-    SIR.add_spontaneous('I', 'R', 0.1)
+    beta = 0.2
+    mu = 0.1
 
-    print("R0 =", SIR.R0())
+    SIR = EpiModel()
+    SIR.add_interaction('S', 'I', 'I', beta)
+    SIR.add_spontaneous('I', 'R', mu)
 
     N = 100000
+    I0 = 10  
+
+    season = np.ones(365+1)
+    season[74:100] = 0.25
+
     fig, ax = plt.subplots(1)
 
+    Nruns = 1000
     values = []
-    Nruns = 100
 
-    for i in range(Nruns):
-        SIR.simulate(365, S=N-1, I=1, R=0)
+    for i in tqdm(range(Nruns), total=Nruns):
+        SIR.simulate(365, season, S=N-1, I=1, R=0)
+
         ax.plot(SIR.I/N, lw=.1, c='b')
+
         if SIR.I.max() > 10:
             values.append(SIR.I)
 
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Population')
+    values = pd.DataFrame(values)
+    (values.median(axis=0)/N).plot(ax=ax, c='r')
 
-    values =  pd.DataFrame(values).T
-    values.columns = np.arange(values.shape[1])
-    ax.plot(values.median(axis=1)/N, lw=1, c='r')
     fig.savefig('SIR.png')
+
+
