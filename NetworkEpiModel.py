@@ -104,10 +104,13 @@ class NetworkEpiModel(EpiModel):
 
 if __name__ == '__main__':
 
-    G = nx.erdos_renyi_graph(100, p=1.)
+    from tqdm import tqdm
+
+    N = 10000
+    G = nx.erdos_renyi_graph(N, p=1.)
 
     SIR = NetworkEpiModel(G)
-    SIR.add_interaction('S', 'I', 'I', 0.2/100)
+    SIR.add_interaction('S', 'I', 'I', 0.2/(2*N))
     #SIR.add_interaction('S', 'E', 'Is', 0.2)
     #SIR.add_spontaneous('E', 'Ia', 0.5*0.1)
     #SIR.add_spontaneous('E', 'Is', 0.5*0.1)
@@ -122,7 +125,7 @@ if __name__ == '__main__':
     values = []
     Nruns = 100
 
-    for i in range(Nruns):
+    for i in tqdm(range(Nruns), total=Nruns):
         SIR.simulate(365, seeds={50:'I'})
         ax.plot(SIR.I/N, lw=.1, c='b')
         if SIR.I.max() > 10:
