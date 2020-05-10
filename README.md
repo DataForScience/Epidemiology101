@@ -2,7 +2,7 @@
 
 # Epidemic Modeling for Everyone
 
-![Multipopulation model](https://raw.githubusercontent.com/DataForScience/Epidemiology101/master/Metapopulation.png)
+![Multipopulation model](https://raw.githubusercontent.com/DataForScience/Epidemiology101/master/SEIIRD_model_season.png)
 
 Repository to accompany the blog series: __Epidemic Modeling__
 
