@@ -49,7 +49,7 @@ class EpiModel(object):
                 rate *= population[pos[agent]]/N
 
                 if self.seasonality is not None:
-                    curr_t = int(np.round(time))
+                    curr_t = int(np.round(time))%366
                     season = float(self.seasonality[curr_t])
                     rate *= season
                 
@@ -84,7 +84,7 @@ class EpiModel(object):
         else:
             raise AttributeError("'EpiModel' object has no attribute '%s'" % name)
 
-    def simulate(self, timesteps, seasonality=None, **kwargs):
+    def simulate(self, timesteps, t_min=1, seasonality=None, **kwargs):
         """Stochastically simulate the epidemic model"""
         pos = {comp: i for i, comp in enumerate(kwargs)}
         population=np.zeros(len(pos), dtype='int')
@@ -96,7 +96,7 @@ class EpiModel(object):
         values.append(population)
 
         comps = list(self.transitions.nodes)
-        time = np.arange(1, timesteps, 1, dtype='int')
+        time = np.arange(t_min, t_min+timesteps, 1, dtype='int')
 
         self.seasonality = seasonality
 
@@ -148,7 +148,7 @@ class EpiModel(object):
         values = np.array(values)
         self.values_ = pd.DataFrame(values[1:], columns=comps, index=time)
     
-    def integrate(self, timesteps, seasonality=None, **kwargs):
+    def integrate(self, timesteps, t_min=1, seasonality=None, **kwargs):
         """Numerically integrate the epidemic model"""
         pos = {comp: i for i, comp in enumerate(kwargs)}
         population=np.zeros(len(pos))
@@ -156,7 +156,7 @@ class EpiModel(object):
         for comp in pos:
             population[pos[comp]] = kwargs[comp]
         
-        time = np.arange(1, timesteps, 1)
+        time = np.arange(t_min, t_min+timesteps, 1)
 
         self.seasonality = seasonality
         self.values_ = pd.DataFrame(scipy.integrate.odeint(self._new_cases, population, time, args=(pos,)), columns=pos.keys(), index=time)
