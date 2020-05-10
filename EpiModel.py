@@ -49,7 +49,7 @@ class EpiModel(object):
                 rate *= population[pos[agent]]/N
 
                 if self.seasonality is not None:
-                    curr_t = int(np.round(time))%366
+                    curr_t = int(time)%365
                     season = float(self.seasonality[curr_t])
                     rate *= season
                 
@@ -122,7 +122,7 @@ class EpiModel(object):
                         rate *= pop[agent]/N
 
                         if self.seasonality is not None:
-                            curr_t = t
+                            curr_t = int(t)%365
                             season = float(self.seasonality[curr_t])
                             rate *= season
 
