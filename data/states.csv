@@ -1,0 +1,52 @@
+index,x,y,name
+AL,7,6,Alabama
+AK,0,1,Alaska
+AZ,2,5,Arizona
+AR,5,5,Arkansas
+CA,1,4,California
+CO,3,4,Colorado
+CT,10,3,Connecticut
+DE,10,4,Delaware
+DC,9,5,District of Columbia
+FL,9,7,Florida
+GA,8,6,Georgia
+HI,0,7,Hawaii
+ID,2,2,Idaho
+IL,6,2,Illinois
+IN,6,3,Indiana
+IA,5,3,Iowa
+KS,4,5,Kansas
+KY,6,4,Kentucky
+LA,5,6,Louisiana
+ME,11,0,Maine
+MD,9,4,Maryland
+MA,10,2,Massachusetts
+MI,7,2,Michigan
+MN,5,2,Minnesota
+MS,6,6,Mississippi
+MO,5,4,Missouri
+MT,3,2,Montana
+NE,4,4,Nebraska
+NV,2,4,Nevada
+NH,11,1,New Hampshire
+NJ,9,3,New Jersey
+NM,3,5,New Mexico
+NY,9,2,New York
+NC,7,5,North Carolina
+ND,4,2,North Dakota
+OH,7,3,Ohio
+OK,4,6,Oklahoma
+OR,1,3,Oregon
+PA,8,3,Pennsylvania
+RI,11,3,Rhode Island
+SC,8,5,South Carolina
+SD,4,3,South Dakota
+TN,6,5,Tennessee
+TX,4,7,Texas
+UT,2,3,Utah
+VT,10,1,Vermont
+VA,8,4,Virginia
+WA,1,2,Washington
+WV,7,4,West Virginia
+WI,6,1,Wisconsin
+WY,3,3,Wyoming

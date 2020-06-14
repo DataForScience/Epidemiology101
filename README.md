@@ -16,7 +16,7 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 1. [Epidemiology001.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology001.ipynb) - [Visualizing the spread of CoVID-19](https://medium.com/data-for-science/visualizing-the-spread-of-covid-19-a4ea21ee8e46) 
 
-2. [Epidemiology002.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology002.ipynb) - [Visualizing individual CoVID-19 patient data](https://medium.com/data-for-science/visualizing-the-spread-of-covid-19-a4ea21ee8e46) 
+2. [Epidemiology002.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology002.ipynb) - [Visualizing individual CoVID-19 patient data](https://medium.com/data-for-science/covid-19-visualizing-individual-patient-data-227bae29d57) 
 
 ## Compartmental Models
 
