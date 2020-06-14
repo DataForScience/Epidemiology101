@@ -8,9 +8,11 @@ Repository to accompany the blog series: __Epidemic Modeling__
 
 These blog posts were recently featured in the [Data Exchange Podcast](https://thedataexchange.media/) by [Ben Lorica](https://twitter.com/bigdata) in the episode on [Computational Models and Simulations of Epidemic Infectious Diseases](https://thedataexchange.media/computational-models-and-simulations-of-epidemic-infectious-diseases/).
 
-## Visualization and Background Information
+## Background Information
 
-0. [CoVID-19: Everything you need to know](https://medium.com/data-for-science/covid-19-everything-you-need-to-know-3063c0c11d13)
+1. [CoVID-19: Everything you need to know](https://medium.com/data-for-science/covid-19-everything-you-need-to-know-3063c0c11d13)
+
+## Visualization
 
 1. [Epidemiology001.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology001.ipynb) - [Visualizing the spread of CoVID-19](https://medium.com/data-for-science/visualizing-the-spread-of-covid-19-a4ea21ee8e46) 
 
