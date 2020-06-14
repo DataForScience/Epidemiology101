@@ -186,21 +186,41 @@ class EpiModel(object):
 
         return text
 
-    def _get_susceptible(self):
-        degree = dict(self.transitions.in_degree())
-
-        for node in degree:
-            if degree[node] == 0:
-                return node
-
-        return None
-
-    def _get_infectious(self):
-        inf = set()
+    def _get_active(self):
+        active = set()
 
         for node_i, node_j, data in self.transitions.edges(data=True):
             if "agent" in data:
-                inf.add(data['agent'])
+                active.add(data['agent'])
+            else:
+                active.add(node_i)
+
+        return active
+
+    def _get_susceptible(self):
+        susceptible = set()
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            if "agent" in data:
+                susceptible.add(node_i)
+
+        return susceptible
+
+    def _get_infections(self):
+        inf = {}
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            if "agent" in data:
+                agent = data['agent']
+
+                if agent not in inf:
+                    inf[agent] = {}
+
+                if node_i not in inf[agent]:
+                    inf[agent][node_i] = {}
+
+                inf[agent][node_i]['target'] = node_j
+                inf[agent][node_i]['rate'] = data['rate']
 
         return inf
 
@@ -232,7 +252,7 @@ class EpiModel(object):
                     target = pos[node_j]
                     agent = pos[data['agent']]
 
-                    if node_i == susceptible:
+                    if node_i in susceptible:
                         F[target, agent] = rate
                 else:
                     source = pos[node_i]
