@@ -10,7 +10,9 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 ## Background Information
 
-1. [CoVID-19: Everything you need to know](https://medium.com/data-for-science/covid-19-everything-you-need-to-know-3063c0c11d13)
+1. [CoVID-19: Everything you need to know](https://medium.com/data-for-science/covid-19-everything-you-need-to-know-3063c0c11d13)\
+
+2. [CoVID-19: The first truly global event](https://medium.com/data-for-science/covid-19-the-first-truly-global-event-64c1676c6356)
 
 ## Visualization
 
