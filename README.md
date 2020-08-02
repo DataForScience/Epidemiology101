@@ -30,10 +30,17 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 4. [Epidemiology104.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology104.ipynb) - [Epidemic Modeling 104: Impact of Seasonal effects on CoVID-19](https://medium.com/data-for-science/epidemic-modeling-104-impact-of-seasonal-effects-on-covid-19-16a1b14056f) 
 
+# Network models
+
+1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a)
+
 # Resources
 
 - Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
 
 - [EpiModel.py](https://github.com/DataForScience/Epidemiology101/blob/master/EpiModel.py) - Python module encapsulates all the code necessary to numerically implement arbitrary compartmental epidemic models
+
+- [NetworkEpiModel.py](https://github.com/DataForScience/Epidemiology101/blob/master/NetworkEpiModel.py) - Python module encapsulates all the code necessary to numerically implement arbitrary epidemic models on networks
+
 
 Be kept put to date on all things Machine Learning and Data Science right in your mail box. Sign up to [The Sunday Briefing](https://data4sci.com/newsletter) newsletter: https://data4sci.com/newsletter

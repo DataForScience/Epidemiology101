@@ -76,19 +76,23 @@ class NetworkEpiModel(EpiModel):
         infections = self._get_infections()
 
         for t in time:
-            population[t] = population[t-1]
+            population[t] = np.copy(population[t-1])
 
             if len(active_nodes) == 0:
                 continue
 
-            current_active = set(active_nodes)
+            current_active = list(active_nodes)
+            np.random.shuffle(current_active)
 
             for node_i in current_active:
                 state_i = population[t-1, node_i]
 
                 if state_i in infections:
                     # contact each neighbour to see if we infect them
-                    for node_j in self.network.neighbors(node_i):
+                    NN = list(self.network.neighbors(node_i))
+                    np.random.shuffle(NN)
+
+                    for node_j in NN:
                         state_j = population[t-1, node_j]
 
                         if state_j in infections[state_i]:
@@ -98,15 +102,9 @@ class NetworkEpiModel(EpiModel):
                                 new_state = infections[state_i][state_j]['target']
                                 population[t, node_j] = new_state
 
-                                active_nodes.add(node_j)
-
-                                if new_state not in active_states:
-                                    active_nodes.remove(node_j)
-
-                                break
-
-                        population[t, node_i] = population[t-1, node_i]
-
+                                if new_state in active_states:
+                                    active_nodes.add(node_j)
+ 
                 if state_i in self.spontaneous:
                     n_trans = len(self.spontaneous[state_i])
 
@@ -151,9 +149,12 @@ if __name__ == '__main__':
     #SIR.add_spontaneous('Ia', 'R', 0.1)
     SIR.add_spontaneous('I', 'R', 0.1)
 
+    print("kavg=", SIR.kavg_)
+    print(SIR.transitions.edges(data=True))
+
     SIR._get_active()
 
-    print("R0 =", SIR.R0())
+    #print("R0 =", SIR.R0())
 
     fig, ax = plt.subplots(1)
 
@@ -161,10 +162,10 @@ if __name__ == '__main__':
     Nruns = 1000
 
     for i in tqdm(range(Nruns), total=Nruns):
-        SIR.simulate(365, seeds={30:'I', 60:'I', 90:'I'})
+        SIR.simulate(100, seeds={30: 'I', 60:'I', 90:'I'})
         ax.plot(SIR.I/N, lw=.1, c='b')
-        #if SIR.I.max() > 10:
-        values.append(SIR.I)
+        if SIR.R.max() > 10:
+            values.append(SIR.I)
 
     ax.set_xlabel('Time')
     ax.set_ylabel('Population')
@@ -177,6 +178,6 @@ if __name__ == '__main__':
     SIR = EpiModel()
     SIR.add_interaction('S', 'I', 'I', 0.2)
     SIR.add_spontaneous('I', 'R', 0.1)
-    SIR.integrate(365, S=N-3, I=3, R=0)
+    SIR.integrate(100, S=N-3, I=3, R=0)
     ax.plot(SIR.I/N, lw=2, c='c')
     fig.savefig('SIR.png')
