@@ -6,7 +6,11 @@
 
 Repository to accompany the blog series: __Epidemic Modeling__
 
-These blog posts were recently featured in the [Data Exchange Podcast](https://thedataexchange.media/) by [Ben Lorica](https://twitter.com/bigdata) in the episode on [Computational Models and Simulations of Epidemic Infectious Diseases](https://thedataexchange.media/computational-models-and-simulations-of-epidemic-infectious-diseases/).
+These blog posts were recently featured in the [Data Exchange Podcast](https://thedataexchange.media/) by [Ben Lorica](https://twitter.com/bigdata) in two episodes: 
+
+- [Computational Models and Simulations of Epidemic Infectious Diseases](https://thedataexchange.media/computational-models-and-simulations-of-epidemic-infectious-diseases/)
+	
+- [Assessing Models and Simulations of Epidemic Infectious Diseases](https://thedataexchange.media/assessing-models-and-simulations-of-epidemic-infectious-diseases/)
 
 ## Background Information
 
