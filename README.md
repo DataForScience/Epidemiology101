@@ -24,6 +24,8 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 2. [Epidemiology002.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology002.ipynb) - [Visualizing individual CoVID-19 patient data](https://medium.com/data-for-science/covid-19-visualizing-individual-patient-data-227bae29d57?source=friends_link&sk=bea35eaa6917056c8176d87af98b1bd1) 
 
+3. [Epidemiology003.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology003.ipynb) - [CoVID-19: Forecasting the death toll](https://medium.com/data-for-science/covid-19-forecasting-the-death-toll-1c3b284537fc?source=friends_link&sk=d244e1c1d9df6900c766cb1f1fc16441) 
+
 ## Compartmental Models
 
 1. [Epidemiology101.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology101.ipynb) - [Epidemic Modeling 101: Or why your CoVID19 exponential fits are wrong](https://medium.com/data-for-science/epidemic-modeling-101-or-why-your-covid19-exponential-fits-are-wrong-97aa50c55f8?source=friends_link&sk=513b7aad9c34af4ad26a6a92c498c601)
