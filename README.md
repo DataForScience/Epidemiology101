@@ -34,7 +34,9 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 3. [Epidemiology103.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology103.ipynb) - [Epidemic Modeling 103: Adding confidence intervals and stochastic effects to your CoVID-19 Models](https://medium.com/data-for-science/epidemic-modeling-103-adding-confidence-intervals-and-stochastic-effects-to-your-covid-19-models-be618b995d6b?source=friends_link&sk=ffd4894f1a5bdff98077f75477033f0d) 
 
-4. [Epidemiology104.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology104.ipynb) - [Epidemic Modeling 104: Impact of Seasonal effects on CoVID-19](https://medium.com/data-for-science/epidemic-modeling-104-impact-of-seasonal-effects-on-covid-19-16a1b14056f?source=friends_link&sk=a8b791ed7b1d6ab3866a91c30667cf28) 
+4. [Epidemiology104.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology104.ipynb) - [Epidemic Modeling 104: Impact of Seasonal effects on CoVID-19](https://medium.com/data-for-science/epidemic-modeling-104-impact-of-seasonal-effects-on-covid-19-16a1b14056f?source=friends_link&sk=a8b791ed7b1d6ab3866a91c30667cf28)
+
+5. [Epidemiology105.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology105.ipynb) - [Epidemic Modeling 105: Competing CoVID-19 Strains](https://medium.com/data-for-science/epidemiology-105-competing-strains-4431f61549ff) 
 
 # Network models
 
