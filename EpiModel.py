@@ -31,6 +31,9 @@ class EpiModel(object):
         
     def add_spontaneous(self, source, target, rate):
         self.transitions.add_edge(source, target, rate=rate)
+
+    def add_vaccination(self, source, target, rate, start):
+        self.transitions.add_edge(source, target, rate=rate, start=start)
         
     def _new_cases(self, population, time, pos):
         """Internal function used by integration routine"""
@@ -44,6 +47,9 @@ class EpiModel(object):
             
             rate = trans['rate']*population[pos[source]]
             
+            if 'start' in trans and trans['start'] >= time:
+                continue
+
             if 'agent' in trans:
                 agent = trans['agent']
                 rate *= population[pos[agent]]/N
@@ -86,10 +92,10 @@ class EpiModel(object):
 
     def simulate(self, timesteps, t_min=1, seasonality=None, **kwargs):
         """Stochastically simulate the epidemic model"""
-        pos = {comp: i for i, comp in enumerate(kwargs)}
+        pos = {comp: i for i, comp in enumerate(self.transitions.nodes())}
         population=np.zeros(len(pos), dtype='int')
 
-        for comp in pos:
+        for comp in kwargs:
             population[pos[comp]] = kwargs[comp]
 
         values = []
@@ -116,6 +122,9 @@ class EpiModel(object):
                     target = pos[node_j]
 
                     rate = data['rate']
+
+                    if 'start' in data and data['start'] >= t:
+                        continue
 
                     if 'agent' in data:
                         agent = pos[data['agent']]
@@ -150,10 +159,10 @@ class EpiModel(object):
     
     def integrate(self, timesteps, t_min=1, seasonality=None, **kwargs):
         """Numerically integrate the epidemic model"""
-        pos = {comp: i for i, comp in enumerate(kwargs)}
+        pos = {comp: i for i, comp in enumerate(self.transitions.nodes())}
         population=np.zeros(len(pos))
         
-        for comp in pos:
+        for comp in kwargs:
             population[pos[comp]] = kwargs[comp]
         
         time = np.arange(t_min, t_min+timesteps, 1)
@@ -176,6 +185,9 @@ class EpiModel(object):
             if 'agent' in trans:
                 agent = trans['agent']
                 text += "%s + %s = %s %f\n" % (source, agent, target, rate)
+            elif 'start' in trans:
+                start = trans['start']
+                text+="%s -> %s %f starting at %s days\n" % (source, target, rate, start)
             else:
                 text+="%s -> %s %f\n" % (source, target, rate)
         
@@ -198,11 +210,12 @@ class EpiModel(object):
         return active
 
     def _get_susceptible(self):
-        susceptible = set()
+        susceptible = set([node for node, deg in self.transitions.in_degree() if deg==0])
 
-        for node_i, node_j, data in self.transitions.edges(data=True):
-            if "agent" in data:
-                susceptible.add(node_i)
+        if len(susceptible) == 0:
+            for node_i, node_j, data in self.transitions.edges(data=True):
+                if "agent" in data:
+                    susceptible.add(node_i)
 
         return susceptible
 
@@ -254,6 +267,8 @@ class EpiModel(object):
 
                     if node_i in susceptible:
                         F[target, agent] = rate
+                elif "start" in data:
+                    continue
                 else:
                     source = pos[node_i]
 
@@ -269,6 +284,8 @@ class EpiModel(object):
         except:
             return None
 
+    def __getitem__(self, bla):
+        return self.values_[bla]
 
 if __name__ == '__main__':
 
@@ -278,6 +295,12 @@ if __name__ == '__main__':
     SIR = EpiModel()
     SIR.add_interaction('S', 'I', 'I', beta)
     SIR.add_spontaneous('I', 'R', mu)
+    SIR.add_vaccination('S', 'V', 0.01, 75)
+    SIR.add_spontaneous('VI', 'VR', mu)
+    SIR.add_interaction('V', 'VI', 'I', beta*(1-.8))
+
+
+    print(SIR)
 
     N = 100000
     I0 = 10  
@@ -290,13 +313,15 @@ if __name__ == '__main__':
     Nruns = 1000
     values = []
 
-    for i in tqdm(range(Nruns), total=Nruns):
-        SIR.simulate(365, season, S=N-1, I=1, R=0)
+    #for i in tqdm(range(Nruns), total=Nruns):
+    SIR.integrate(365, S=.3*N-10, I=10, V=.7*N)
 
-        ax.plot(SIR.I/N, lw=.1, c='b')
+    SIR[['I', 'VI', 'VR', 'R']].plot(ax=ax)
+    print(SIR.S.tail())
+    #ax.plot(SIR.I/N, lw=.1, c='b')
 
-        if SIR.I.max() > 10:
-            values.append(SIR.I)
+    if SIR.I.max() > 10:
+        values.append(SIR.I)
 
     values = pd.DataFrame(values)
     (values.median(axis=0)/N).plot(ax=ax, c='r')
