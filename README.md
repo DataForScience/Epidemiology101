@@ -42,6 +42,11 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a?source=friends_link&sk=3373f0fb78be25e232ccda801cd54b3d)
 
+# Vaccination
+
+1. [Epidemiology 301.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology301.ipynb) - [Epidemiology 301: How to model the effects of vaccination](https://medium.data4sci.com/how-to-model-the-effects-of-vaccination-b328768ba2df?sk=8f4601beeb89622099387b3dcecf7d39)
+
+
 # Resources
 
 - Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
