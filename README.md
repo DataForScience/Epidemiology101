@@ -40,7 +40,9 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 # Network models
 
-1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a?source=friends_link&sk=3373f0fb78be25e232ccda801cd54b3d)
+1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a?source=friends_link&sk=3373f0fb78be25e232ccda801cd54b3d)\
+
+2. [Epidemiology 202.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology202.ipynb) - [Epidemiology 202: Network Models, the effect of degree correlations](https://medium.data4sci.com/network-models-the-role-of-degree-correlations-c857ae2325ed)
 
 # Vaccination
 

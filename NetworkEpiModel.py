@@ -25,7 +25,7 @@ class NetworkEpiModel(EpiModel):
     def integrate(self, timesteps, **kwargs):
         raise NotImplementedError("Network Models don't support numerical integration")
 
-    def add_interaction(self, source, target, agent, rate, rescale=True):
+    def add_interaction(self, source, target, agent, rate, rescale=False):
         if rescale:
             rate /= self.kavg_
 
@@ -132,6 +132,8 @@ class NetworkEpiModel(EpiModel):
         self.values_ = pd.DataFrame.from_records(self.population_.apply(lambda x: Counter(x), axis=1)).fillna(0).astype('int')
 
     def R0(self):
+        if 'R' not in set(self.transitions.nodes):
+            return None
         return np.round(super(NetworkEpiModel, self).R0()*self.kavg_, 2)
 
 if __name__ == '__main__':
