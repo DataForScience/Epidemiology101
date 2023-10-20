@@ -10,6 +10,7 @@ from numpy import random
 import scipy.integrate
 import pandas as pd
 import matplotlib.pyplot as plt
+import string
 
 from tqdm import tqdm
 tqdm.pandas()
@@ -20,25 +21,145 @@ class EpiModel(object):
         Provides a way to implement and numerically integrate 
     """
     def __init__(self, compartments=None):
+        """
+        Initialize the EpiModel object
+        
+        Parameters:
+        - compartments: list of strings, optional
+            List of compartment names
+        
+        Returns:
+        None
+        """
         self.transitions = nx.MultiDiGraph()
         self.seasonality = None
+        self.population = None
+        self.orig_comps = None
         
         if compartments is not None:
             self.transitions.add_nodes_from([comp for comp in compartments])
     
-    def add_interaction(self, source, target, agent, rate):        
+    def add_interaction(self, source, target, agent, rate):  
+        """
+        Add an interaction between two compartments
+        
+        Parameters:
+        - source: string
+            Name of the source compartment
+        - target: string
+            Name of the target compartment
+        - agent: string
+            Name of the agent
+        - rate: float
+            Rate of the interaction
+        
+        Returns:
+        None
+        """      
         self.transitions.add_edge(source, target, agent=agent, rate=rate)        
         
     def add_spontaneous(self, source, target, rate):
+        """
+        Add a spontaneous transition between two compartments
+        
+        Parameters:
+        - source: string
+            Name of the source compartment
+        - target: string
+            Name of the target compartment
+        - rate: float
+            Rate of the transition
+        
+        Returns:
+        None
+        """
         self.transitions.add_edge(source, target, rate=rate)
 
     def add_vaccination(self, source, target, rate, start):
+        """
+        Add a vaccination transition between two compartments
+        
+        Parameters:
+        - source: string
+            Name of the source compartment
+        - target: string
+            Name of the target compartment
+        - rate: float
+            Rate of the vaccination
+        - start: int
+            Start time of the vaccination
+        
+        Returns:
+        None
+        """
         self.transitions.add_edge(source, target, rate=rate, start=start)
+
+    def add_age_structure(self, matrix, population):
+        self.contact = np.asarray(matrix)
+        self.population = np.asarray(population).flatten()
+
+        assert self.contact.shape[0] == self.contact.shape[1], "The contact matrix must be square." 
+
+        age_groups = list(string.ascii_lowercase[:len(matrix)])
+        n_ages = len(age_groups)
+
+        model = EpiModel()
+        self.orig_comps = list(self.transitions.nodes())
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            # Interacting transition
+            if "agent" in data:
+                for i, age_i in enumerate(age_groups):
+                    node_age_i = node_i + '_' + age_i
+                    node_age_j = node_j + '_' + age_i
+
+                    for j, age_j in enumerate(age_groups):
+                        agent_age = data["agent"] + '_' + age_j
+
+                        model.add_interaction(node_age_i, node_age_j, agent_age, data["rate"]*self.contact[i][j])
+
+            # Spontaneous transition
+            else:
+                for age_i in age_groups:
+                    node_age_i = node_i + '_' + age_i
+                    node_age_j = node_j + '_' + age_i
+
+                    if "start" not in data:
+                        model.add_spontaneous(node_age_i, node_age_j, data["rate"])
+                    else:
+                        # vaccination
+                        model.add_vaccination(node_age_i, node_age_j, data["rate"], data["start"])
+
+        self.transitions = model.transitions
         
     def _new_cases(self, population, time, pos):
-        """Internal function used by integration routine"""
+        """
+        Internal function used by integration routine
+        
+        Parameters:
+        - population: numpy array
+            Current population of each compartment
+        - time: float
+            Current time
+        - pos: dict
+            Dictionary mapping compartment names to indices
+        
+        Returns:
+        numpy array
+            Array of new cases for each compartment
+        """
         diff = np.zeros(len(pos))
-        N = np.sum(population)        
+        N = np.sum(population)
+
+        if self.population is not None:
+            N = {}
+
+            for comp_i in self.transitions.nodes():
+                age_group = comp_i.split('_')[-1]
+
+                for comp_j in pos:
+                    if comp_j.endswith(age_group):
+                        N[comp_i] = N.get(comp_i, 0) + population[pos[comp_j]]
         
         for edge in self.transitions.edges(data=True):
             source = edge[0]
@@ -52,7 +173,11 @@ class EpiModel(object):
 
             if 'agent' in trans:
                 agent = trans['agent']
-                rate *= population[pos[agent]]/N
+
+                if self.population is None:
+                    rate *= population[pos[agent]]/N
+                else:
+                    rate *= population[pos[agent]]/N[source]
 
                 if self.seasonality is not None:
                     curr_t = int(time)%365
@@ -65,7 +190,21 @@ class EpiModel(object):
         return diff
     
     def plot(self, title=None, normed=True, **kwargs):
-        """Convenience function for plotting"""
+        """
+        Convenience function for plotting
+        
+        Parameters:
+        - title: string, optional
+            Title of the plot
+        - normed: bool, optional
+            Whether to normalize the values or not
+        - kwargs: keyword arguments
+            Additional arguments to pass to the plot function
+        
+        Returns:
+        matplotlib.axes._subplots.AxesSubplot
+            The plot object
+        """
         try:
             if normed:
                 N = self.values_.iloc[0].sum()
@@ -84,14 +223,39 @@ class EpiModel(object):
             raise NotInitialized('You must call integrate() first')
     
     def __getattr__(self, name):
-        """Dynamic method to return the individual compartment values"""
+        """
+        Dynamic method to return the individual compartment values
+        
+        Parameters:
+        - name: string
+            Name of the compartment
+        
+        Returns:
+        pandas.Series
+            The values of the specified compartment
+        """        
         if 'values_' in self.__dict__:
             return self.values_[name]
         else:
             raise AttributeError("'EpiModel' object has no attribute '%s'" % name)
 
     def simulate(self, timesteps, t_min=1, seasonality=None, **kwargs):
-        """Stochastically simulate the epidemic model"""
+        """
+        Stochastically simulate the epidemic model
+        
+        Parameters:
+        - timesteps: int
+            Number of time steps to simulate
+        - t_min: int, optional
+            Starting time
+        - seasonality: numpy array, optional
+            Array of seasonal factors
+        - kwargs: keyword arguments
+            Initial population of each compartment
+        
+        Returns:
+        None
+        """
         pos = {comp: i for i, comp in enumerate(self.transitions.nodes())}
         population=np.zeros(len(pos), dtype='int')
 
@@ -158,19 +322,67 @@ class EpiModel(object):
         self.values_ = pd.DataFrame(values[1:], columns=comps, index=time)
     
     def integrate(self, timesteps, t_min=1, seasonality=None, **kwargs):
-        """Numerically integrate the epidemic model"""
+        """
+        Numerically integrate the epidemic model
+        
+        Parameters:
+        - timesteps: int
+            Number of time steps to integrate
+        - t_min: int, optional
+            Starting time
+        - seasonality: numpy array, optional
+            Array of seasonality values
+        - kwargs: keyword arguments
+            Initial population of each compartment
+        
+        Returns:
+        None
+        """        
         pos = {comp: i for i, comp in enumerate(self.transitions.nodes())}
         population=np.zeros(len(pos))
-        
+        total_pop = self.population.sum()
+
         for comp in kwargs:
-            population[pos[comp]] = kwargs[comp]
+            if self.population is None:
+                if comp not in pos:
+                    continue
+
+                population[pos[comp]] = kwargs[comp]
+            else:
+                p = np.copy(self.population)/total_pop
+                n = np.random.multinomial(kwargs[comp], p, 1)[0]
+
+                for i, age in enumerate(string.ascii_lowercase[:len(p)]):
+                    comp_age = comp + '_' + age
+                    if comp_age not in pos:
+                        continue
+
+                    population[pos[comp_age]] = n[i]
         
         time = np.arange(t_min, t_min+timesteps, 1)
 
         self.seasonality = seasonality
-        self.values_ = pd.DataFrame(scipy.integrate.odeint(self._new_cases, population, time, args=(pos,)), columns=pos.keys(), index=time)
+        values = pd.DataFrame(scipy.integrate.odeint(self._new_cases, population, time, args=(pos,)), columns=pos.keys(), index=time)
+
+        if self.population is None:
+            self.values_ = values
+        else:
+            self.values_ages_ = values
+
+            totals = values.T.copy()
+            totals['key'] = totals.index.map(lambda x: '_'.join(x.split('_')[:-1]))
+            totals = totals.groupby('key').sum().T
+            totals.columns.name = None
+            self.values_ = totals
 
     def __repr__(self):
+        """
+        Return a string representation of the EpiModel object
+        
+        Returns:
+        string
+            String representation of the EpiModel object
+        """
         text = 'Epidemic Model with %u compartments and %u transitions:\n\n' % \
               (self.transitions.number_of_nodes(), 
                self.transitions.number_of_edges())
@@ -289,43 +501,40 @@ class EpiModel(object):
 
 if __name__ == '__main__':
 
-    beta = 0.2
+    Nk_uk = pd.read_csv("United Kingdom-2020.csv", index_col=0)
+    Nk_ke = pd.read_csv("Kenya-2020.csv", index_col=0)
+
+    contacts_uk = pd.read_excel("MUestimates_all_locations_2.xlsx", sheet_name="United Kingdom of Great Britain", header=None)
+    contacts_ke = pd.read_excel("MUestimates_all_locations_1.xlsx", sheet_name="Kenya")
+
+    beta = 0.05
     mu = 0.1
 
-    SIR = EpiModel()
-    SIR.add_interaction('S', 'I', 'I', beta)
-    SIR.add_spontaneous('I', 'R', mu)
-    SIR.add_vaccination('S', 'V', 0.01, 75)
-    SIR.add_spontaneous('VI', 'VR', mu)
-    SIR.add_interaction('V', 'VI', 'I', beta*(1-.8))
+    SIR_uk = EpiModel()
+    SIR_uk.add_interaction('S', 'I', 'I', beta)
+    SIR_uk.add_spontaneous('I', 'R', mu)
 
 
-    print(SIR)
+    SIR_ke = EpiModel()
+    SIR_ke.add_interaction('S', 'I', 'I', beta)
+    SIR_ke.add_spontaneous('I', 'R', mu)
 
-    N = 100000
-    I0 = 10  
+    N_uk = int(Nk_uk.sum())
+    N_ke = int(Nk_ke.sum())
 
-    season = np.ones(365+1)
-    season[74:100] = 0.25
+
+    SIR_uk.add_age_structure(contacts_uk, Nk_uk)
+    SIR_ke.add_age_structure(contacts_ke, Nk_ke)
+
+    SIR_uk.integrate(100, S=N_uk*.99, I=N_uk*.01, R=0)
+    SIR_ke.integrate(100, S=N_ke*.99, I=N_ke*.01, R=0)
 
     fig, ax = plt.subplots(1)
 
-    Nruns = 1000
-    values = []
+    (SIR_uk['I']*100/N_uk).plot(ax=ax)
+    (SIR_ke['I']*100/N_ke).plot(ax=ax)
+    ax.legend(['UK', 'Kenya'])
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Population (%)')
 
-    #for i in tqdm(range(Nruns), total=Nruns):
-    SIR.integrate(365, S=.3*N-10, I=10, V=.7*N)
-
-    SIR[['I', 'VI', 'VR', 'R']].plot(ax=ax)
-    print(SIR.S.tail())
-    #ax.plot(SIR.I/N, lw=.1, c='b')
-
-    if SIR.I.max() > 10:
-        values.append(SIR.I)
-
-    values = pd.DataFrame(values)
-    (values.median(axis=0)/N).plot(ax=ax, c='r')
-
-    fig.savefig('SIR.png')
-
-
+    fig.savefig('SIR_age.png', dpi=300, facecolor='white')
