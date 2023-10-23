@@ -177,7 +177,7 @@ class EpiModel(object):
                 if self.population is None:
                     rate *= population[pos[agent]]/N
                 else:
-                    rate *= population[pos[agent]]/N[source]
+                    rate *= population[pos[agent]]/N[agent]
 
                 if self.seasonality is not None:
                     curr_t = int(time)%365
@@ -449,6 +449,59 @@ class EpiModel(object):
 
         return inf
 
+    def draw_model(self, ax=None):
+        try:
+            from networkx.drawing.nx_agraph import graphviz_layout
+            pos=graphviz_layout(self.transitions, prog='dot', args='-Grankdir="LR"')
+        except:
+            pos=nx.layout.spectral_layout(G)
+
+        colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+        S_color = colors[0]
+        E_color = colors[4]
+        I_color = colors[1]
+        R_color = colors[2]
+        D_color = colors[7]
+        default_color = colors[3]
+
+        node_colors = []
+
+        for node in self.transitions.nodes():
+            if node[0] == 'S':
+                node_colors.append(S_color)
+            elif node[0] == 'E':
+                node_colors.append(E_color)
+            elif node[0] == 'I':
+                node_colors.append(I_color)
+            elif node[0] == 'R':
+                node_colors.append(R_color)
+            elif node[0] == 'D':
+                node_colors.append(D_color)
+            else:
+                node_colors.append(default_color)
+
+        edge_labels = {}
+
+        for node_i, node_j, data in self.transitions.edges(data=True):
+            edge = (node_i, node_j)
+
+            if "agent" in data:
+                if edge not in edge_labels:
+                    edge_labels[edge] = data["agent"]
+                else:
+                    edge_labels[edge] = edge_labels[edge] + "+" + data["agent"]
+            else:
+                edge_labels[edge] = ""
+
+
+        if ax is None:
+            fig, ax = plt.subplots(1)
+
+        nx.draw(self.transitions, pos, with_labels=True, arrows=True, node_shape='H', 
+        font_color='k', node_color=node_colors, node_size=1000, ax=ax)
+        nx.draw_networkx_edge_labels(self.transitions, pos, edge_labels=edge_labels, ax=ax)
+
 
     def R0(self):
         infected = set()
@@ -492,20 +545,25 @@ class EpiModel(object):
         
             eig, v = linalg.eig(np.dot(F, linalg.inv(V)))
 
-            return eig.max()
+            return np.real(eig.max())
         except:
             return None
 
-    def __getitem__(self, bla):
-        return self.values_[bla]
+    def __getitem__(self, key):
+        if key in self.values_.columns:
+            return self.values_[key]
+        elif key in self.values_ages_.columns:
+            return self.values_ages_[key]
+        else:
+            return None
 
 if __name__ == '__main__':
 
-    Nk_uk = pd.read_csv("United Kingdom-2020.csv", index_col=0)
-    Nk_ke = pd.read_csv("Kenya-2020.csv", index_col=0)
+    Nk_uk = pd.read_csv("data/United Kingdom-2020.csv", index_col=0)
+    Nk_ke = pd.read_csv("data/Kenya-2020.csv", index_col=0)
 
-    contacts_uk = pd.read_excel("MUestimates_all_locations_2.xlsx", sheet_name="United Kingdom of Great Britain", header=None)
-    contacts_ke = pd.read_excel("MUestimates_all_locations_1.xlsx", sheet_name="Kenya")
+    contacts_uk = pd.read_excel("data/MUestimates_all_locations_2.xlsx", sheet_name="United Kingdom of Great Britain", header=None)
+    contacts_ke = pd.read_excel("data/MUestimates_all_locations_1.xlsx", sheet_name="Kenya")
 
     beta = 0.05
     mu = 0.1
@@ -528,6 +586,10 @@ if __name__ == '__main__':
 
     SIR_uk.integrate(100, S=N_uk*.99, I=N_uk*.01, R=0)
     SIR_ke.integrate(100, S=N_ke*.99, I=N_ke*.01, R=0)
+
+    fig, ax = plt.subplots(1)
+    SIR_uk.draw_model(ax)
+    fig.savefig('SIR_model.png', dpi=300, facecolor='white')
 
     fig, ax = plt.subplots(1)
 
