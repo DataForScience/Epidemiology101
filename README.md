@@ -40,14 +40,16 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 # Network models
 
-1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a?source=friends_link&sk=3373f0fb78be25e232ccda801cd54b3d)\
+1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a?source=friends_link&sk=3373f0fb78be25e232ccda801cd54b3d)
 
 2. [Epidemiology 202.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology202.ipynb) - [Epidemiology 202: Network Models, the effect of degree correlations](https://medium.data4sci.com/network-models-the-role-of-degree-correlations-c857ae2325ed)
 
-# Vaccination
+# Advanced Models
 
 1. [Epidemiology 301.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology301.ipynb) - [Epidemiology 301: How to model the effects of vaccination](https://medium.data4sci.com/how-to-model-the-effects-of-vaccination-b328768ba2df?sk=8f4601beeb89622099387b3dcecf7d39)
 
+2. [Epidemiology 302.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology302.ipynb) - [Epidemiology 302: The Impact of Age Structure on Epidemic Spreading
+](https://medium.data4sci.com/epidemic-modeling-302-the-impact-of-age-structure-on-epidemic-spreading-ca25577d7b4e?sk=50ef96e1600489db3e3b2190afe8cf99)
 
 # Resources
 

@@ -3,6 +3,7 @@
 # @author Bruno Goncalves
 ######################################################
 
+import warnings
 import networkx as nx
 import numpy as np
 from numpy import linalg
@@ -340,7 +341,6 @@ class EpiModel(object):
         """        
         pos = {comp: i for i, comp in enumerate(self.transitions.nodes())}
         population=np.zeros(len(pos))
-        total_pop = self.population.sum()
 
         for comp in kwargs:
             if self.population is None:
@@ -349,6 +349,7 @@ class EpiModel(object):
 
                 population[pos[comp]] = kwargs[comp]
             else:
+                total_pop = self.population.sum()
                 p = np.copy(self.population)/total_pop
                 n = np.random.multinomial(kwargs[comp], p, 1)[0]
 
@@ -373,7 +374,17 @@ class EpiModel(object):
             totals['key'] = totals.index.map(lambda x: '_'.join(x.split('_')[:-1]))
             totals = totals.groupby('key').sum().T
             totals.columns.name = None
-            self.values_ = totals
+            self.values_ = totals[self.orig_comps].copy()
+
+    def single_step(self, seasonality=None, **kwargs):
+        if hasattr(self, 'values_') is False:
+            self.simulate(2, 1, seasonality=seasonality, **kwargs)
+        else:
+            old_values = self.values_.copy()
+            t_curr = self.values_.index.max()
+            self.simulate(2, t_curr, seasonality=seasonality, **kwargs)
+            new_values = pd.concat([old_values, self.values_.iloc[[-1]]])
+            self.values_ = new_values
 
     def __repr__(self):
         """
@@ -544,8 +555,9 @@ class EpiModel(object):
                         V[target, source] -= rate
         
             eig, v = linalg.eig(np.dot(F, linalg.inv(V)))
-
-            return np.real(eig.max())
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return np.real(eig.max())
         except:
             return None
 
@@ -558,7 +570,23 @@ class EpiModel(object):
             return None
 
 if __name__ == '__main__':
+    SIR = EpiModel()
 
+    beta = 0.3
+    mu = 0.1
+
+    SIR.add_interaction('S', 'I', 'I', rate=beta)
+    SIR.add_spontaneous('I', 'R', rate=mu)
+
+    SIR.single_step(S=10000, I=10, R=0)
+
+    for i in range(10):
+        temp = dict(SIR.values_.iloc[-1].to_dict())
+        SIR.single_step(**temp)
+
+    SIR.values_
+
+    exit()
     Nk_uk = pd.read_csv("data/United Kingdom-2020.csv", index_col=0)
     Nk_ke = pd.read_csv("data/Kenya-2020.csv", index_col=0)
 
