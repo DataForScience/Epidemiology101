@@ -221,7 +221,7 @@ class EpiModel(object):
             
             return ax
         except:
-            raise NotInitialized('You must call integrate() first')
+            raise NotInitialized('You must call integrate() or simulate() first')
     
     def __getattr__(self, name):
         """
