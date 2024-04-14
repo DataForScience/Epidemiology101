@@ -51,7 +51,7 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 2. [Epidemiology 302.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology302.ipynb) - [Epidemiology 302: The Impact of Age Structure on Epidemic Spreading
 ](https://medium.data4sci.com/epidemic-modeling-302-the-impact-of-age-structure-on-epidemic-spreading-ca25577d7b4e?sk=50ef96e1600489db3e3b2190afe8cf99)
 
-3. [Epidemiolgy 303.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology303.ipynb) - [Epidemiology 303: Metapopulation Models](https://medium.data4sci.com/epidemic-modeling-303-meta-population-models-09178b590817)
+3. [Epidemiology 303.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology303.ipynb) - [Epidemiology 303: Metapopulation Models](https://medium.data4sci.com/epidemic-modeling-303-meta-population-models-09178b590817)
 
 # Resources
 
