@@ -14,44 +14,44 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 ## Background Information
 
-1. [CoVID-19: Everything you need to know](https://medium.com/data-for-science/covid-19-everything-you-need-to-know-3063c0c11d13?source=friends_link&sk=8ee5468fde0d597ac77065b6a45e4519)
+1. [CoVID-19: Everything you need to know](https://data4sci.substack.com/p/covid-19-everything-you-need-to-know)
 
-2. [CoVID-19: The first truly global event](https://medium.com/data-for-science/covid-19-the-first-truly-global-event-64c1676c6356?source=friends_link&sk=33f76ae30b39a9c4b6ae4b4666763655)
+2. [CoVID-19: The first truly global event](https://data4sci.substack.com/p/covid-19-the-first-truly-global-event)
 
 ## Visualization
 
-1. [Epidemiology001.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology001.ipynb) - [Visualizing the spread of CoVID-19](https://medium.com/data-for-science/visualizing-the-spread-of-covid-19-a4ea21ee8e46?source=friends_link&sk=0c3a7410777cbedd77064d48756f2bc2) 
+1. [Epidemiology001.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology001.ipynb) - [Visualizing the spread of CoVID-19](https://data4sci.substack.com/p/visualizing-the-spread-of-covid-19) 
 
-2. [Epidemiology002.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology002.ipynb) - [Visualizing individual CoVID-19 patient data](https://medium.com/data-for-science/covid-19-visualizing-individual-patient-data-227bae29d57?source=friends_link&sk=bea35eaa6917056c8176d87af98b1bd1) 
+2. [Epidemiology002.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology002.ipynb) - [Visualizing individual CoVID-19 patient data](https://data4sci.substack.com/p/covid-19-visualizing-individual-patient) 
 
-3. [Epidemiology003.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology003.ipynb) - [CoVID-19: Forecasting the death toll](https://medium.com/data-for-science/covid-19-forecasting-the-death-toll-1c3b284537fc?source=friends_link&sk=d244e1c1d9df6900c766cb1f1fc16441) 
+3. [Epidemiology003.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology003.ipynb) - [CoVID-19: Forecasting the death toll](https://data4sci.substack.com/p/covid-19-forecasting-the-death-toll) 
 
 ## Compartmental Models
 
-1. [Epidemiology101.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology101.ipynb) - [Epidemic Modeling 101: Or why your CoVID19 exponential fits are wrong](https://medium.com/data-for-science/epidemic-modeling-101-or-why-your-covid19-exponential-fits-are-wrong-97aa50c55f8?source=friends_link&sk=513b7aad9c34af4ad26a6a92c498c601)
+1. [Epidemiology101.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology101.ipynb) - [Epidemic Modeling 101: Or why your CoVID19 exponential fits are wrong](https://data4sci.substack.com/p/epidemic-modeling-101-or-why-your)
 
-2. [Epidemiology102.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology102.ipynb) - [Epidemic Modeling 102: All CoVID-19 models are wrong, but some are useful](https://medium.com/data-for-science/epidemic-modeling-102-all-covid-19-models-are-wrong-but-some-are-useful-c81202cc6ee9?source=friends_link&sk=8ee8eed1af6d13859d02559358144928) 
+2. [Epidemiology102.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology102.ipynb) - [Epidemic Modeling 102: All CoVID-19 models are wrong, but some are useful](https://data4sci.substack.com/p/all-covid-19-models-are-wrong-but) 
 
-3. [Epidemiology103.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology103.ipynb) - [Epidemic Modeling 103: Adding confidence intervals and stochastic effects to your CoVID-19 Models](https://medium.com/data-for-science/epidemic-modeling-103-adding-confidence-intervals-and-stochastic-effects-to-your-covid-19-models-be618b995d6b?source=friends_link&sk=ffd4894f1a5bdff98077f75477033f0d) 
+3. [Epidemiology103.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology103.ipynb) - [Epidemic Modeling 103: Adding confidence intervals and stochastic effects to your CoVID-19 Models](https://data4sci.substack.com/p/adding-confidence-intervals-and-stochastic) 
 
-4. [Epidemiology104.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology104.ipynb) - [Epidemic Modeling 104: Impact of Seasonal effects on CoVID-19](https://medium.com/data-for-science/epidemic-modeling-104-impact-of-seasonal-effects-on-covid-19-16a1b14056f?source=friends_link&sk=a8b791ed7b1d6ab3866a91c30667cf28)
+4. [Epidemiology104.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology104.ipynb) - [Epidemic Modeling 104: Impact of Seasonal effects on CoVID-19](https://data4sci.substack.com/p/impact-of-seasonal-effects-on-covid)
 
-5. [Epidemiology105.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology105.ipynb) - [Epidemic Modeling 105: Competing CoVID-19 Strains](https://medium.com/data-for-science/epidemiology-105-competing-strains-4431f61549ff) 
+5. [Epidemiology105.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology105.ipynb) - [Epidemic Modeling 105: Competing CoVID-19 Strains](https://data4sci.substack.com/p/competing-covid-19-strains) 
 
 # Network models
 
-1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://medium.com/data-for-science/epidemiology-201-network-structure-superspreaders-and-contact-tracing-336754e14e9a?source=friends_link&sk=3373f0fb78be25e232ccda801cd54b3d)
+1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://data4sci.substack.com/p/network-structure-super-spreaders)
 
-2. [Epidemiology 202.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology202.ipynb) - [Epidemiology 202: Network Models, the effect of degree correlations](https://medium.data4sci.com/network-models-the-role-of-degree-correlations-c857ae2325ed)
+2. [Epidemiology 202.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology202.ipynb) - [Epidemiology 202: Network Models, the effect of degree correlations](https://data4sci.substack.com/p/network-models)
 
 # Advanced Models
 
-1. [Epidemiology 301.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology301.ipynb) - [Epidemiology 301: How to model the effects of vaccination](https://medium.data4sci.com/how-to-model-the-effects-of-vaccination-b328768ba2df?sk=8f4601beeb89622099387b3dcecf7d39)
+1. [Epidemiology 301.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology301.ipynb) - [Epidemiology 301: How to model the effects of vaccination](https://data4sci.substack.com/p/how-to-model-the-effects-of-vaccination)
 
 2. [Epidemiology 302.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology302.ipynb) - [Epidemiology 302: The Impact of Age Structure on Epidemic Spreading
-](https://medium.data4sci.com/epidemic-modeling-302-the-impact-of-age-structure-on-epidemic-spreading-ca25577d7b4e?sk=50ef96e1600489db3e3b2190afe8cf99)
+](https://data4sci.substack.com/p/the-impact-of-age-structure-on-epidemic)
 
-3. [Epidemiology 303.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology303.ipynb) - [Epidemiology 303: Metapopulation Models](https://medium.data4sci.com/epidemic-modeling-303-meta-population-models-09178b590817)
+3. [Epidemiology 303.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology303.ipynb) - [Epidemiology 303: Metapopulation Models](https://data4sci.substack.com/p/meta-population-models)
 
 # Resources
 
