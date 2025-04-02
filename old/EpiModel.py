@@ -76,6 +76,14 @@ class EpiModel(object):
         """
         self.transitions.add_edge(source, target, rate=rate)
 
+    def add_birth_rate(self, rate):
+        for comp in self.transitions.nodes():
+            self.transitions.nodes[comp]['birth']=rate
+
+    def add_death_rate(self, rate):
+        for comp in self.transitions.nodes():
+            self.transitions.nodes[comp]['death']=rate
+
     def add_vaccination(self, source, target, rate, start):
         """
         Add a vaccination transition between two compartments
@@ -187,7 +195,19 @@ class EpiModel(object):
                 
             diff[pos[source]] -= rate
             diff[pos[target]] += rate
-            
+        
+        # Population dynamics
+        for comp, data in self.transitions.nodes(data=True):
+            comp_id = pos[comp]
+
+            if "birth" in data:
+                births = population[comp_id]*data["birth"]
+                diff[comp_id] += births
+
+            if "death" in data:
+                deaths = population[comp_id]*data["death"]
+                diff[comp_id] -= deaths
+
         return diff
     
     def plot(self, title=None, normed=True, **kwargs):
@@ -277,6 +297,7 @@ class EpiModel(object):
             N = np.sum(pop)
 
 
+            # Disease dynamics
             for comp in comps:
                 trans = list(self.transitions.edges(comp, data=True))             
 
@@ -285,6 +306,10 @@ class EpiModel(object):
                 for _, node_j, data in trans:
                     source = pos[comp]
                     target = pos[node_j]
+
+
+                    if pop[source] == 0:
+                        continue
 
                     rate = data['rate']
 
@@ -316,6 +341,18 @@ class EpiModel(object):
 
                 for i in range(len(delta)):
                     new_pop[i] += delta[i]
+
+            # Population dynamics
+            for comp, data in self.transitions.nodes(data=True):
+                comp_id = pos[comp]
+
+                if "birth" in data:
+                    births = np.random.binomial(pop[comp_id], data["birth"])
+                    new_pop[comp_id] += births
+
+                if "death" in data:
+                    deaths = np.random.binomial(pop[comp_id], data["death"])
+                    new_pop[comp_id] -= deaths
 
             values.append(new_pop)
 

@@ -40,4 +40,4 @@ figure.subplot.left: 0.08
 figure.subplot.right: 0.95
 figure.subplot.bottom: 0.07
 figure.figsize: 12.8, 8.8
-figure.dpi: 300
+figure.dpi: 70
