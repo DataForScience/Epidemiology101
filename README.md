@@ -53,9 +53,11 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 3. [Epidemiology 303.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology303.ipynb) - [Epidemiology 303: Metapopulation Models](https://data4sci.substack.com/p/meta-population-models)
 
+4. [Epidemiology 304.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology304.ipynb) - [Epidemiology 303: Metapopulation Models](http://data4sci.substack.com/p/demographic-processes)
+
 # Resources
 
 - Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
 
 
-Be kept put to date on all things Machine Learning and Data Science right in your mail box. Sign up to [The Data Science Briefing](https://data4sci.com/newsletter) newsletter: https://data4sci.com/newsletter
+Be kept put to date on all things Machine Learning and Data Science right in your mail box. Sign up for [The Data Science Briefing](https://data4sci.com/newsletter) newsletter: https://data4sci.com/newsletter
