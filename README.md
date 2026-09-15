@@ -55,6 +55,22 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 4. [Epidemiology 304.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology304.ipynb) - [Epidemiology 303: Metapopulation Models](http://data4sci.substack.com/p/demographic-processes)
 
+# Setup
+
+This project uses [uv](https://docs.astral.sh/uv/) to manage its Python environment. To install the dependencies and launch Jupyter:
+
+```bash
+uv sync
+uv run jupyter lab
+```
+
+`pygraphviz` compiles against the system Graphviz library. On macOS with Homebrew:
+
+```bash
+brew install graphviz
+CFLAGS="-I$(brew --prefix graphviz)/include" LDFLAGS="-L$(brew --prefix graphviz)/lib" uv sync
+```
+
 # Resources
 
 - Jupyter notebook includes all the code used to generate the figures in the blog posts. Run the code online using  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
