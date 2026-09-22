@@ -1,0 +1,24 @@
+image: gitpod/workspace-full:latest
+
+tasks:
+  - name: Setup
+    init: |
+      sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+        graphviz libgraphviz-dev pkg-config libgeos-dev libproj-dev
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+      export PATH="$HOME/.local/bin:$PATH"
+      uv sync
+    command: |
+      export PATH="$HOME/.local/bin:$PATH"
+      echo "Environment ready. Run 'uv run jupyter lab' to start Jupyter."
+
+ports:
+  - port: 8888
+    onOpen: open-preview
+    visibility: public
+
+vscode:
+  extensions:
+    - ms-python.python
+    - ms-toolsai.jupyter

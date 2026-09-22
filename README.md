@@ -109,6 +109,12 @@ Covers more realistic model extensions, including the impact of vaccination camp
 
 The repo includes a [`.devcontainer`](.devcontainer/devcontainer.json) configuration, so you can run every notebook online without installing anything locally. Click the badge above (or use the "Code" → "Codespaces" button on GitHub) to launch a ready-to-use environment: it installs the Graphviz/GEOS/PROJ system libraries `pygraphviz` and `cartopy` need, installs [`uv`](https://docs.astral.sh/uv/), and runs `uv sync` automatically. Once the Codespace finishes building, open any `.ipynb` file and select the `.venv` kernel (or run `uv run jupyter lab` in the terminal) to start working.
 
+### Gitpod
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/DataForScience/Epidemiology101)
+
+An alternative to Codespaces: the [`.gitpod.yml`](.gitpod.yml) config does the same setup — installing the system libraries `pygraphviz`/`cartopy` need, installing `uv`, and running `uv sync` — on top of Gitpod's own workspace image. Click the badge above to launch it, then run `uv run jupyter lab` in the terminal (or open a notebook directly with the VS Code Jupyter extension, which is pre-installed).
+
 ### Local install
 
 This project uses [uv](https://docs.astral.sh/uv/) to manage its Python environment, including `epidemik` and the rest of the dependencies listed in `pyproject.toml`. To install the dependencies and launch Jupyter:
