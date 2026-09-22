@@ -1,5 +1,3 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DataForScience/Epidemiology101/master)
-
 # Epidemic Modeling for Everyone
 
 ![Multipopulation model](https://raw.githubusercontent.com/DataForScience/Epidemiology101/master/SEIIRD_model_season.png)
@@ -15,7 +13,7 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 ## The `epidemik` package
 
 
-<summary>The compartmental modeling engine that powers the notebooks in this repo, from simple SIR models to networks and metapopulations.</summary>
+The compartmental modeling engine that powers the notebooks in this repo, from simple SIR models to networks and metapopulations.
 
 These notebooks build their models with [`epidemik`](https://github.com/DataForScience/epidemik), a companion Python package for simulating compartmental epidemic models. It lets you define arbitrary compartmental models from interaction (`S + I -> I + I`) and spontaneous (`I -> R`) transitions, integrate them deterministically or run seeded stochastic simulations with the same interface, and compute R<sub>0</sub> automatically via the next-generation matrix. It also supports vaccination campaigns, birth/death rates, seasonal forcing, age structure, and — through its `NetworkEpiModel` and `MetaEpiModel` classes — epidemics on contact networks and across coupled sub-populations.
 
@@ -36,7 +34,7 @@ SIR.add_spontaneous('I', 'R', mu=0.1)
 ## Background Information
 
 
-<summary>Context-setting posts on CoVID-19 as a global phenomenon, no modeling required.</summary>
+Context-setting posts on CoVID-19 as a global phenomenon, no modeling required.
 
 An introduction to the CoVID-19 pandemic and why it became the first truly global event of its kind, setting the stage for the modeling posts that follow.
 
@@ -48,7 +46,7 @@ An introduction to the CoVID-19 pandemic and why it became the first truly globa
 ## Visualization
 
 
-<summary>Notebooks that visualize CoVID-19 case, patient, and mortality data without building predictive models.</summary>
+Notebooks that visualize CoVID-19 case, patient, and mortality data without building predictive models.
 
 Covers plotting the geographic and temporal spread of the pandemic, exploring individual patient-level data, and building simple death-toll forecasts from observed trends.
 
@@ -62,7 +60,7 @@ Covers plotting the geographic and temporal spread of the pandemic, exploring in
 ## Compartmental Models
 
 
-<summary>The core SIR/SEIR-family models: exponential fits, confidence intervals, seasonality, and competing strains.</summary>
+The core SIR/SEIR-family models: exponential fits, confidence intervals, seasonality, and competing strains.
 
 Builds up classic compartmental epidemic models step by step, starting from why naive exponential fits mislead, then adding uncertainty quantification, seasonal forcing, and competition between multiple circulating strains.
 
@@ -77,10 +75,10 @@ Builds up classic compartmental epidemic models step by step, starting from why 
 
 5. [Epidemiology105.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology105.ipynb) - [Epidemic Modeling 105: Competing CoVID-19 Strains](https://data4sci.substack.com/p/competing-covid-19-strains) 
 
-# Network models
+## Network models
 
 
-<summary>Moving beyond well-mixed populations to explicit contact networks, super-spreaders, and degree correlations.</summary>
+Moving beyond well-mixed populations to explicit contact networks, super-spreaders, and degree correlations.
 
 Examines how the structure of who-contacts-whom shapes an outbreak, including the role of super-spreaders in contact tracing and how correlations between connected individuals' degrees affect spreading dynamics.
 
@@ -89,9 +87,9 @@ Examines how the structure of who-contacts-whom shapes an outbreak, including th
 
 2. [Epidemiology 202.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology202.ipynb) - [Epidemiology 202: Network Models, the effect of degree correlations](https://data4sci.substack.com/p/network-models)
 
-# Advanced Models
+## Advanced Models
 
-<summary>Extensions that add real-world structure: vaccination, age, geography, demographics, and social contagion.</summary>
+Extensions that add real-world structure: vaccination, age, geography, demographics, and social contagion.
 
 Covers more realistic model extensions, including the impact of vaccination campaigns, age-structured populations, metapopulation (multi-location) spreading, demographic processes like births and deaths, and an application of epidemic modeling to the spread of ideas as a "cognitive virus."
 
@@ -106,7 +104,7 @@ Covers more realistic model extensions, including the impact of vaccination camp
 5. [Epidemiology 305.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology305.ipynb) - [Epidemiology 305: The Epidemiology of a Cognitive Virus](https://data4sci.substack.com/p/the-epidemiology-of-a-cognitive-virus)
 
 
-# Setup
+## Setup
 
 This project uses [uv](https://docs.astral.sh/uv/) to manage its Python environment, including `epidemik` and the rest of the dependencies listed in `pyproject.toml`. To install the dependencies and launch Jupyter:
 
