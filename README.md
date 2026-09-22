@@ -12,10 +12,11 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 
 ## The `epidemik` package
 
-
 The compartmental modeling engine that powers the notebooks in this repo, from simple SIR models to networks and metapopulations.
 
 These notebooks build their models with [`epidemik`](https://github.com/DataForScience/epidemik), a companion Python package for simulating compartmental epidemic models. It lets you define arbitrary compartmental models from interaction (`S + I -> I + I`) and spontaneous (`I -> R`) transitions, integrate them deterministically or run seeded stochastic simulations with the same interface, and compute R<sub>0</sub> automatically via the next-generation matrix. It also supports vaccination campaigns, birth/death rates, seasonal forcing, age structure, and — through its `NetworkEpiModel` and `MetaEpiModel` classes — epidemics on contact networks and across coupled sub-populations.
+
+Under the hood, a model is represented as a directed multigraph (built on `networkx`), integrated with `scipy`'s ODE solvers, and returned as tidy `pandas` DataFrames that plug directly into `matplotlib` for quick trajectory and model-structure plots. Named parameters can reference one another as expressions (e.g. `mu="beta/2"`), which keeps related rates in sync as you sweep scenarios. Model definitions can be saved to and loaded from YAML, so you can version-control a model independently of the notebook that runs it, or pull a ready-made model straight from the `epidemik` repository. Starting with `Epidemiology304`, every notebook in the Advanced Models section builds directly on top of `epidemik` rather than hand-rolled ODE code, so understanding the package is the fastest way to follow — and extend — those notebooks.
 
 
 - GitHub: [DataForScience/epidemik](https://github.com/DataForScience/epidemik)
@@ -33,10 +34,9 @@ SIR.add_spontaneous('I', 'R', mu=0.1)
 
 ## Background Information
 
-
 Context-setting posts on CoVID-19 as a global phenomenon, no modeling required.
 
-An introduction to the CoVID-19 pandemic and why it became the first truly global event of its kind, setting the stage for the modeling posts that follow.
+An introduction to the CoVID-19 pandemic and why it became the first truly global event of its kind, setting the stage for the modeling posts that follow. The first post walks through the basics anyone needed to understand CoVID-19 as it was unfolding — how it spread, why it was different from prior outbreaks, and the terminology used throughout the rest of the series. The second post zooms out to explain what made this pandemic historically unusual: near-simultaneous, worldwide transmission enabled by modern travel networks, and why that global reach makes CoVID-19 a uniquely rich case study for the modeling techniques covered later in this repository.
 
 
 1. [CoVID-19: Everything you need to know](https://data4sci.substack.com/p/covid-19-everything-you-need-to-know)
@@ -45,10 +45,9 @@ An introduction to the CoVID-19 pandemic and why it became the first truly globa
 
 ## Visualization
 
-
 Notebooks that visualize CoVID-19 case, patient, and mortality data without building predictive models.
 
-Covers plotting the geographic and temporal spread of the pandemic, exploring individual patient-level data, and building simple death-toll forecasts from observed trends.
+Covers plotting the geographic and temporal spread of the pandemic, exploring individual patient-level data, and building simple death-toll forecasts from observed trends. `Epidemiology001` reconstructs how the outbreak spread across countries and over time directly from public case-count data, giving you an intuitive feel for the data before any model is introduced. `Epidemiology002` drills down from aggregate counts to individual patient records, showing how demographics and outcomes vary case by case. `Epidemiology003` uses simple trend extrapolation — no compartmental model yet — to forecast near-term deaths, illustrating both the appeal and the pitfalls of naive forecasting that the later Compartmental Models section addresses head-on.
 
 
 1. [Epidemiology001.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology001.ipynb) - [Visualizing the spread of CoVID-19](https://data4sci.substack.com/p/visualizing-the-spread-of-covid-19) 
@@ -59,10 +58,9 @@ Covers plotting the geographic and temporal spread of the pandemic, exploring in
 
 ## Compartmental Models
 
-
 The core SIR/SEIR-family models: exponential fits, confidence intervals, seasonality, and competing strains.
 
-Builds up classic compartmental epidemic models step by step, starting from why naive exponential fits mislead, then adding uncertainty quantification, seasonal forcing, and competition between multiple circulating strains.
+Builds up classic compartmental epidemic models step by step, starting from why naive exponential fits mislead, then adding uncertainty quantification, seasonal forcing, and competition between multiple circulating strains. `Epidemiology101` explains why fitting a raw exponential to early case counts overestimates growth and leads to bad predictions, motivating the shift to compartmental (SIR-style) models. `Epidemiology102` introduces those compartmental models properly, along with an honest discussion of their assumptions and limitations. `Epidemiology103` adds confidence intervals and stochastic effects, so a model's output is a distribution of plausible trajectories rather than a single deterministic curve. `Epidemiology104` incorporates seasonal forcing, showing how transmission rates that vary over the year reshape the epidemic curve and complicate long-term projections. `Epidemiology105` extends the framework to multiple competing strains, modeling how variants interact and compete for the same susceptible population.
 
 
 1. [Epidemiology101.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology101.ipynb) - [Epidemic Modeling 101: Or why your CoVID19 exponential fits are wrong](https://data4sci.substack.com/p/epidemic-modeling-101-or-why-your)
@@ -77,10 +75,9 @@ Builds up classic compartmental epidemic models step by step, starting from why 
 
 ## Network models
 
-
 Moving beyond well-mixed populations to explicit contact networks, super-spreaders, and degree correlations.
 
-Examines how the structure of who-contacts-whom shapes an outbreak, including the role of super-spreaders in contact tracing and how correlations between connected individuals' degrees affect spreading dynamics.
+Examines how the structure of who-contacts-whom shapes an outbreak, including the role of super-spreaders in contact tracing and how correlations between connected individuals' degrees affect spreading dynamics. `Epidemiology201` replaces the homogeneous-mixing assumption of earlier notebooks with an explicit contact network, showing how a small number of highly connected super-spreaders can dominate transmission and how contact tracing exploits that structure to contain outbreaks more efficiently than blanket interventions. `Epidemiology202` goes further by varying degree correlations — whether highly connected individuals tend to link to other highly connected individuals or to poorly connected ones — and shows how that single structural property changes epidemic thresholds and final outbreak size, even when the average number of contacts stays fixed.
 
 
 1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://data4sci.substack.com/p/network-structure-super-spreaders)
