@@ -12,13 +12,34 @@ These blog posts were recently featured in the [Data Exchange Podcast](https://t
 	
 - [Assessing Models and Simulations of Epidemic Infectious Diseases](https://thedataexchange.media/assessing-models-and-simulations-of-epidemic-infectious-diseases/)
 
+## The `epidemik` package
+
+
+<summary>The compartmental modeling engine that powers the notebooks in this repo, from simple SIR models to networks and metapopulations.</summary>
+
+These notebooks build their models with [`epidemik`](https://github.com/DataForScience/epidemik), a companion Python package for simulating compartmental epidemic models. It lets you define arbitrary compartmental models from interaction (`S + I -> I + I`) and spontaneous (`I -> R`) transitions, integrate them deterministically or run seeded stochastic simulations with the same interface, and compute R<sub>0</sub> automatically via the next-generation matrix. It also supports vaccination campaigns, birth/death rates, seasonal forcing, age structure, and — through its `NetworkEpiModel` and `MetaEpiModel` classes — epidemics on contact networks and across coupled sub-populations.
+
+
+- GitHub: [DataForScience/epidemik](https://github.com/DataForScience/epidemik)
+- PyPI: [pypi.org/project/epidemik](https://pypi.org/project/epidemik/)
+- Documentation: [epidemik.readthedocs.io](https://epidemik.readthedocs.io/)
+
+```python
+from epidemik import EpiModel
+
+SIR = EpiModel(seed=1337)
+SIR.add_interaction('S', 'I', 'I', beta=0.2)
+SIR.add_spontaneous('I', 'R', mu=0.1)
+```
+
+
 ## Background Information
 
-<details>
+
 <summary>Context-setting posts on CoVID-19 as a global phenomenon, no modeling required.</summary>
 
 An introduction to the CoVID-19 pandemic and why it became the first truly global event of its kind, setting the stage for the modeling posts that follow.
-</details>
+
 
 1. [CoVID-19: Everything you need to know](https://data4sci.substack.com/p/covid-19-everything-you-need-to-know)
 
@@ -26,11 +47,11 @@ An introduction to the CoVID-19 pandemic and why it became the first truly globa
 
 ## Visualization
 
-<details>
+
 <summary>Notebooks that visualize CoVID-19 case, patient, and mortality data without building predictive models.</summary>
 
 Covers plotting the geographic and temporal spread of the pandemic, exploring individual patient-level data, and building simple death-toll forecasts from observed trends.
-</details>
+
 
 1. [Epidemiology001.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology001.ipynb) - [Visualizing the spread of CoVID-19](https://data4sci.substack.com/p/visualizing-the-spread-of-covid-19) 
 
@@ -40,11 +61,11 @@ Covers plotting the geographic and temporal spread of the pandemic, exploring in
 
 ## Compartmental Models
 
-<details>
+
 <summary>The core SIR/SEIR-family models: exponential fits, confidence intervals, seasonality, and competing strains.</summary>
 
 Builds up classic compartmental epidemic models step by step, starting from why naive exponential fits mislead, then adding uncertainty quantification, seasonal forcing, and competition between multiple circulating strains.
-</details>
+
 
 1. [Epidemiology101.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology101.ipynb) - [Epidemic Modeling 101: Or why your CoVID19 exponential fits are wrong](https://data4sci.substack.com/p/epidemic-modeling-101-or-why-your)
 
@@ -58,11 +79,11 @@ Builds up classic compartmental epidemic models step by step, starting from why 
 
 # Network models
 
-<details>
+
 <summary>Moving beyond well-mixed populations to explicit contact networks, super-spreaders, and degree correlations.</summary>
 
 Examines how the structure of who-contacts-whom shapes an outbreak, including the role of super-spreaders in contact tracing and how correlations between connected individuals' degrees affect spreading dynamics.
-</details>
+
 
 1. [Epidemiology 201.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology201.ipynb) - [Epidemiology 201: Network Structure, Super-spreaders and Contact Tracing](https://data4sci.substack.com/p/network-structure-super-spreaders)
 
@@ -70,11 +91,9 @@ Examines how the structure of who-contacts-whom shapes an outbreak, including th
 
 # Advanced Models
 
-<details>
 <summary>Extensions that add real-world structure: vaccination, age, geography, demographics, and social contagion.</summary>
 
 Covers more realistic model extensions, including the impact of vaccination campaigns, age-structured populations, metapopulation (multi-location) spreading, demographic processes like births and deaths, and an application of epidemic modeling to the spread of ideas as a "cognitive virus."
-</details>
 
 1. [Epidemiology 301.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology301.ipynb) - [Epidemiology 301: How to model the effects of vaccination](https://data4sci.substack.com/p/how-to-model-the-effects-of-vaccination)
 
@@ -86,25 +105,6 @@ Covers more realistic model extensions, including the impact of vaccination camp
 
 5. [Epidemiology 305.ipynb](https://github.com/DataForScience/Epidemiology101/blob/master/Epidemiology305.ipynb) - [Epidemiology 305: The Epidemiology of a Cognitive Virus](https://data4sci.substack.com/p/the-epidemiology-of-a-cognitive-virus)
 
-# The `epidemik` package
-
-<details>
-<summary>The compartmental modeling engine that powers the notebooks in this repo, from simple SIR models to networks and metapopulations.</summary>
-
-Starting with `Epidemiology304`, these notebooks build their models with [`epidemik`](https://github.com/DataForScience/epidemik), a companion Python package for simulating compartmental epidemic models. It lets you define arbitrary compartmental models from interaction (`S + I -> I + I`) and spontaneous (`I -> R`) transitions, integrate them deterministically or run seeded stochastic simulations with the same interface, and compute R<sub>0</sub> automatically via the next-generation matrix. It also supports vaccination campaigns, birth/death rates, seasonal forcing, age structure, and — through its `NetworkEpiModel` and `MetaEpiModel` classes — epidemics on contact networks and across coupled sub-populations.
-</details>
-
-- GitHub: [DataForScience/epidemik](https://github.com/DataForScience/epidemik)
-- PyPI: [pypi.org/project/epidemik](https://pypi.org/project/epidemik/)
-- Documentation: [epidemik.readthedocs.io](https://epidemik.readthedocs.io/)
-
-```python
-from epidemik import EpiModel
-
-SIR = EpiModel(seed=1337)
-SIR.add_interaction('S', 'I', 'I', beta=0.2)
-SIR.add_spontaneous('I', 'R', mu=0.1)
-```
 
 # Setup
 
