@@ -103,6 +103,14 @@ Covers more realistic model extensions, including the impact of vaccination camp
 
 ## Setup
 
+### GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/DataForScience/Epidemiology101)
+
+The repo includes a [`.devcontainer`](.devcontainer/devcontainer.json) configuration, so you can run every notebook online without installing anything locally. Click the badge above (or use the "Code" → "Codespaces" button on GitHub) to launch a ready-to-use environment: it installs the Graphviz/GEOS/PROJ system libraries `pygraphviz` and `cartopy` need, installs [`uv`](https://docs.astral.sh/uv/), and runs `uv sync` automatically. Once the Codespace finishes building, open any `.ipynb` file and select the `.venv` kernel (or run `uv run jupyter lab` in the terminal) to start working.
+
+### Local install
+
 This project uses [uv](https://docs.astral.sh/uv/) to manage its Python environment, including `epidemik` and the rest of the dependencies listed in `pyproject.toml`. To install the dependencies and launch Jupyter:
 
 ```bash
